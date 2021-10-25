@@ -1,0 +1,43 @@
+Afinní transformace -> je geometrická transformace bodu
+Tøi základní transformace - posunutí, otáèení, zmìna mìøítka
+Posunutí - translace -> prostì se pøiète vektor k bodu
+Rotace
+x' = x * cos alpha - y * sin alpha
+y' = x * sin alpha + y * cos alpha
+Na zkoušce - umìt odvodit rotaci ve 2D, zopakovat si násobení matic
+Zmìna mìøítka na ose x -> prostì se násobí body mìøítkem
+x' = s_x x
+y' = s_y y
+
+Všechny tøi transformace [x']=[a_xx a_xy][x][b_x]
+						 [y']=[a_yx a_yy][y]+[_y]
+První matice - nové body
+Druhá matice - posunutí, nebo rotace
+Tøetí matice - pùvodní body
+Ètvrtá matice - mìøítko
+
+Homogenní souøadný systém
+A_h = [2,2,0] -> tohle je nekoneèno
+Umožòuje nám vlastnì si spoèíst všechny transformace mezi sebou do jedné matice a tou pak násobit velké množství bodù, místo toho, aby se násobili tøeba 4 matice mezi sebou po každé pro každý bod
+
+Poznámky ze cvièení:
+Když chci vykreslit tøeba 20 objektù, tak je žádoucí mít jeden a ten posouvat pomocí transformací-0.5f
+Objekt na vykreslování má v sobì shader, VAO a transformaèní matici
+Shader by mìl mít metodu, která nastaví nìjakou uniformní promìnnou na zadanou hodnotu
+
+Poznámky z pøednášky
+Když se ukáže jenom èerná obrazovka, tak to mùže být tím, že je kamera otoèená naopak
+Bude nová tøída Camera
+Sférický souøadný systém, polární systém
+Pohyb myší zleva doprava se pøepoèítá na úhel phi
+Pohyb myší nahoru dolù se pøepoèítá na alpha
+Musí se udržovat informace o tom, kde byla myš pøedtím, aby se dal spoèítat ten úhel, v každém pøedchozím framu
+Promítání = 3D (reprezentace objektù) -> 2D (monitor)
+Camera bude mít projectionMatrix, viewMatrix, bude tam použitý Observer
+
+Poznámky z pøednášky
+Nová tøída Light - bude mít pozici
+Už se neposílá v druhém layoutu barva, poèítá se podle normály
+V opengl se jmenuje dot product skalární souèin
+Pøidat naèítání shaderù ze souboru
+Bude se chtít vzorec se sumou pro phongùv osvìtlovací model
