@@ -5,11 +5,12 @@ uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
-out vec4 ex_worldNormal;
+out vec3 ex_worldNormal;
 out vec4 ex_worldPosition;
 
 void main() {
     gl_Position = (projectionMatrix * viewMatrix * modelMatrix) * vec4(in_Position, 1.0);
     ex_worldPosition = modelMatrix * vec4(in_Position, 1.0);
-    ex_worldNormal = modelMatrix * vec4(in_Normal, 1.0);
+    ex_worldNormal = normalize(transpose(inverse(mat3(modelMatrix))) * in_Normal);
+    //ex_worldNormal = modelMatrix * vec4(in_Normal, 1.0);
 };
