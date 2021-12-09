@@ -22,22 +22,27 @@ Window::Window(int width, int height, const char* title)
 	GLFW_OPENGL_CORE_PROFILE);  //*/
 }
 
-int Window::getCloseFlag()
+int Window::get_close_flag()
 {
 	return glfwWindowShouldClose(window);
 }
 
-void Window::getFrameBufferSize(int* width, int* height)
+void Window::get_frame_buffer_size(int* width, int* height)
 {
 	glfwGetFramebufferSize(window, width, height);
 }
 
-void Window::swapBuffers()
+void Window::get_cursor_pos(double* x_pos, double* y_pos)
+{
+	glfwGetCursorPos(window, x_pos, y_pos);
+}
+
+void Window::swap_buffers()
 {
 	glfwSwapBuffers(window);
 }
 
-void Window::destroyWindow()
+void Window::destroy_window()
 {
 	glfwDestroyWindow(window);
 }
@@ -48,11 +53,19 @@ void Window::bind_callbacks()
 		throw std::runtime_error(description);
 		});
 
+	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+		App::get_instance()->get_controller()->mouse_button_callback(button, action, mods);
+		});
+
 	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double x, double y) {
 		App::get_instance()->get_controller()->cursor_callback(window, x, y);
 	});
 
 	glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 		App::get_instance()->get_controller()->key_callback(key, scancode, action, mods);
+	});
+
+	glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+		App::get_instance()->get_controller()->window_size_callback(width, height);
 	});
 }

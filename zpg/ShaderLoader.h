@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHADER_LOADER_H
+#define SHADER_LOADER_H
 #include <string.h> 
 #include <stdio.h>
 #include <fstream>
@@ -11,15 +12,16 @@ using namespace std;
 
 class ShaderLoader
 {
-	GLuint vertexID = 0;
-	GLuint fragmentID = 0;
-	string loadFile(const char* fname);
+	GLuint vertex_id = 0;
+	GLuint fragment_id = 0;
+	string load_file(const char* fname);
 protected:
 	GLuint shader_program_id = 0;
 public:
-	GLuint loadShader(const char* vertexFile, const char* fragmentFile);
-	void deleteShader();
+	GLuint load_shader(const char* vertex_file, const char* fragment_file);
+	void delete_shader();
 	ShaderLoader();
-	ShaderLoader(const char* vertexFile, const char* fragmentFile);
+	ShaderLoader(const char* vertex_file, const char* fragment_file);
 	~ShaderLoader();
 };
+#endif

@@ -15,8 +15,15 @@
 #include "DrawableObjectFactory.h"
 #include "ShaderManager.h"
 #include "Light.h"
+#include "Skybox.h"
+#include "PointLight.h"
+#include "DirectionalLight.h"
+#include "SpotLight.h"
+#include "MovingObjectFactory.h"
 
+class SkyboxShader;
 class Window;
+class Controller;
 class App
 {
 private:
@@ -26,9 +33,10 @@ private:
 	static App* instance;
 public:
 	void init();
-	void startRendering();
+	void start_rendering();
 	static App* get_instance();
 	Controller* get_controller();
+	Window* get_window();
 };
 
 #endif

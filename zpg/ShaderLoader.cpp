@@ -1,7 +1,7 @@
 #include "ShaderLoader.h"
 #include "ShaderLoader.h"
 
-string ShaderLoader::loadFile(const char* fname)
+string ShaderLoader::load_file(const char* fname)
 {
 	ifstream file(fname);
 	if (!file.is_open())
@@ -15,10 +15,10 @@ string ShaderLoader::loadFile(const char* fname)
 	return fileData.str();
 }
 
-GLuint ShaderLoader::loadShader(const char* vertexFile, const char* fragmentFile) {
+GLuint ShaderLoader::load_shader(const char* vertexFile, const char* fragmentFile) {
 	printf("Shader::loadShader %s %s \n", vertexFile, fragmentFile);
-	string vertexShaderString = loadFile(vertexFile);
-	string fragmentShaderString = loadFile(fragmentFile);
+	string vertexShaderString = load_file(vertexFile);
+	string fragmentShaderString = load_file(fragmentFile);
 	int vlen = vertexShaderString.length();
 	int flen = fragmentShaderString.length();
 
@@ -28,39 +28,39 @@ GLuint ShaderLoader::loadShader(const char* vertexFile, const char* fragmentFile
 	const char* vertexShaderCStr = vertexShaderString.c_str();
 	const char* fragmentShaderCStr = fragmentShaderString.c_str();
 
-	vertexID = glCreateShader(GL_VERTEX_SHADER);    //Vertex Shader
-	glShaderSource(vertexID, 1, (const GLchar**)&vertexShaderCStr, &vlen);
-	glCompileShader(vertexID);
+	vertex_id = glCreateShader(GL_VERTEX_SHADER);    //Vertex Shader
+	glShaderSource(vertex_id, 1, (const GLchar**)&vertexShaderCStr, &vlen);
+	glCompileShader(vertex_id);
 	GLint status;
-	glGetShaderiv(vertexID, GL_COMPILE_STATUS, &status);
+	glGetShaderiv(vertex_id, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE)
 	{
 		GLint infoLogLength;
-		glGetShaderiv(vertexID, GL_INFO_LOG_LENGTH, &infoLogLength);
+		glGetShaderiv(vertex_id, GL_INFO_LOG_LENGTH, &infoLogLength);
 		GLchar* strInfoLog = new GLchar[infoLogLength + 1];
-		glGetShaderInfoLog(vertexID, infoLogLength, NULL, strInfoLog);
+		glGetShaderInfoLog(vertex_id, infoLogLength, NULL, strInfoLog);
 		fprintf(stderr, "Compile failure in Vertex shader:\n%s\n", strInfoLog);
 		delete[] strInfoLog;
 	}
 
-	fragmentID = glCreateShader(GL_FRAGMENT_SHADER); //Fragment Shader
-	glShaderSource(fragmentID, 1, (const GLchar**)&fragmentShaderCStr, &flen);
-	glCompileShader(fragmentID);
+	fragment_id = glCreateShader(GL_FRAGMENT_SHADER); //Fragment Shader
+	glShaderSource(fragment_id, 1, (const GLchar**)&fragmentShaderCStr, &flen);
+	glCompileShader(fragment_id);
 
-	glGetShaderiv(fragmentID, GL_COMPILE_STATUS, &status);
+	glGetShaderiv(fragment_id, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE)
 	{
 		GLint infoLogLength;
-		glGetShaderiv(fragmentID, GL_INFO_LOG_LENGTH, &infoLogLength);
+		glGetShaderiv(fragment_id, GL_INFO_LOG_LENGTH, &infoLogLength);
 		GLchar* strInfoLog = new GLchar[infoLogLength + 1];
-		glGetShaderInfoLog(fragmentID, infoLogLength, NULL, strInfoLog);
+		glGetShaderInfoLog(fragment_id, infoLogLength, NULL, strInfoLog);
 		fprintf(stderr, "Compile failure in Fragment shader:\n%s\n", strInfoLog);
 		delete[] strInfoLog;
 	}
 
 	shader_program_id = glCreateProgram();
-	glAttachShader(shader_program_id, vertexID);
-	glAttachShader(shader_program_id, fragmentID);
+	glAttachShader(shader_program_id, vertex_id);
+	glAttachShader(shader_program_id, fragment_id);
 	glLinkProgram(shader_program_id);
 
 	glGetProgramiv(shader_program_id, GL_LINK_STATUS, &status);
@@ -78,12 +78,12 @@ GLuint ShaderLoader::loadShader(const char* vertexFile, const char* fragmentFile
 
 	return shader_program_id;
 }
-void ShaderLoader::deleteShader() {
+void ShaderLoader::delete_shader() {
 	printf("ShaderLoader::deleteShader()\n");
-	glDetachShader(shader_program_id, vertexID);
-	glDetachShader(shader_program_id, fragmentID);
-	glDeleteShader(vertexID);
-	glDeleteShader(fragmentID);
+	glDetachShader(shader_program_id, vertex_id);
+	glDetachShader(shader_program_id, fragment_id);
+	glDeleteShader(vertex_id);
+	glDeleteShader(fragment_id);
 	glUseProgram(0);
 	glDeleteProgram(this->shader_program_id);
 }
@@ -95,7 +95,7 @@ ShaderLoader::ShaderLoader()
 
 ShaderLoader::ShaderLoader(const char* vertexFile, const char* fragmentFile)
 {
-	this->shader_program_id = loadShader(vertexFile, fragmentFile);
+	this->shader_program_id = load_shader(vertexFile, fragmentFile);
 }
 
 

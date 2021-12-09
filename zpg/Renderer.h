@@ -2,6 +2,7 @@
 #define RENDERER_H
 #include "Scene.h"
 #include "Window.h"
+#include "MovingObject.h"
 
 class Window;
 class Renderer

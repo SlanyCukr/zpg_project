@@ -14,14 +14,16 @@ void main(void) {
 
     vec3 lightReflectionVector = reflect(-lightVector, normalize(ex_worldNormal));
     
-    float dot_product_diffuse = max(dot(normalize(lightVector), normalize(ex_worldNormal)), 0.0);
-    float dot_product_reflection = max(dot(normalize(viewVector), normalize(lightReflectionVector)), 0.0);
+    float dot_product_diffuse = max(dot(normalize(lightVector), normalize(ex_worldNormal)), 0.0f);
+    
+    float dot_product_reflection = 0.0f;
+    if (dot_product_diffuse != 0.0f)
+        dot_product_reflection = max(dot(normalize(viewVector), normalize(lightReflectionVector)), 0.0f);
     
     vec4 diffuse = dot_product_diffuse * vec4(0.5, 0, 0.8, 1.0); // difùzní složka - intenzita svìtla daná jako skalární souèin vektoru svìtla a normály fragmentu
-    vec4 ambient = vec4(0.1, 0.1, 0.1, 1.0); // ambientní složka
+    vec4 ambient = vec4(0.2, 0.2, 0.2, 1.0); // ambientní složka
     
-    float light_strength = 1.0f;
-    vec4 reflection = pow(dot_product_reflection, 50) * vec4(1.0f, 1.0f, 1.0f, 1.0); // odrazová složka; vec4 = barva svìtla
-    
+    vec4 reflection = pow(dot_product_reflection, 16) * vec4(1.0f, 1.0f, 1.0f, 1.0); // odrazová složka; vec4 = barva svìtla
+
     frag_colour = ambient + diffuse + reflection;
 }

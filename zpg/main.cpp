@@ -11,7 +11,7 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 
 //Include the standard C++ headers  
-#include <stdlib.h>)
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "App.h"
@@ -28,10 +28,8 @@ glm::mat4 View = glm::lookAt(
 // Model matrix : an identity matrix (model will be at the origin)
 glm::mat4 Model = glm::mat4(1.0f);
 
-
-// VŠECHNY OBJEKTY PŘEDĚLAT NA HEAP MÍSTO TOHO ZKURVENÉHO STACKU
 int main(void)
 {
-	App::get_instance()->startRendering();
+	App::get_instance()->start_rendering();
 	return 0;
 }
